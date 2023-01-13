@@ -6,6 +6,8 @@ import { useState, useEffect } from "react"
 
 function App() {
   const [users, setUsers] = useState(null)
+  const[selectedUser, setSelectedUser]= useState(null)
+
   useEffect(()=>{
     fetch("https://randomuser.me/api/?results=30")
     .then(result => result.json())
@@ -14,7 +16,7 @@ function App() {
   },[])
 
   const handleClick = (user) => {
-    console.log(user)
+    setSelectedUser(user)
   }
 
   const toggleModal = () => {
@@ -26,6 +28,7 @@ function App() {
     <main>
       <Modal />
       <div className="container-wrapper m-auto grid md:grid-cols-2 grid-cols-1 gap-7">
+      {selectedUser ? <Modal user={selectedUser}/> : null}
         { users ? 
           users.map(user => {
             return <div key={user.id.value || 
