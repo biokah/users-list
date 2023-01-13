@@ -1,6 +1,9 @@
-const User = () => {
+const User = ({user,handleClick}) => {
     return(
-        <div>User</div>
+        <div onClick={()=>{handleClick(user)}}>
+            <img src={user.picture.medium}/>
+            <span>{user.name.title}. {user.name.first} {user.name.last}</span>
+        </div>
     )
 }
 
