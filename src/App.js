@@ -12,14 +12,18 @@ function App() {
     .then(data => setUsers(data.results))
     
   },[])
+  const handleClick = (user) => {
+    console.log(user);
+  }
   return (
-    <div className="text-indigo-400">
-      <User />
+    <div className="container">
+      
       { users ? 
         users.map(user => {
-          return <span key={user.id.value || 
+          return <div key={user.id.value || 
             user.phone
-             }>{user.name.first}</span>
+             }>
+             <User user={user} handleClick={handleClick}/></div>
         })
        : <span>cargando...</span> }
     </div>
