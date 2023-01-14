@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [users, setUsers] = useState(null);
-  
+  const [selectedUser,setSelectedUser]=useState(null);
   useEffect(() => {
     fetch("https://randomuser.me/api/?results=30")
     .then(result => result.json())
@@ -14,17 +14,17 @@ function App() {
   },[])
 
   const handleClick = (user) => {
-    console.log("sale el modal con la info del usuario: "+user.name.first)
+    setSelectedUser(user);
   }
 
   const toggleModal = () => {
-    
+    setSelectedUser(null);
   }
 
 
   return (
     <main>
-      
+      {selectedUser?<Modal selectedUser={selectedUser} toggleModal={toggleModal}/>:null}
       <div className="container-wrapper m-auto grid md:grid-cols-2 grid-cols-1 gap-7">
         { users ? 
           users.map(user => {
