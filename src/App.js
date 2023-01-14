@@ -7,6 +7,7 @@ import { useState, useEffect } from "react"
 function App() {
   const [users, setUsers] = useState(null)
   const [selectedUser, setSelectedUser] = useState(null)
+  const {string, setString} = useState("")
 
   useEffect(()=>{
     fetch("https://randomuser.me/api/?results=30")
@@ -14,6 +15,13 @@ function App() {
     .then(data => setUsers(data.results))
     
   },[])
+
+  useEffect (() => {
+    const filteredUsers = users.filter(user => {
+      return user.name.first.includes(string)
+    })
+    console.log(filteredUsers);
+  }, {string})
 
   const handleClick = (user) => {
     setSelectedUser(user)
