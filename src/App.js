@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [users, setUsers] = useState(null);
+  
   useEffect(() => {
     fetch("https://randomuser.me/api/?results=30")
     .then(result => result.json())
@@ -13,7 +14,7 @@ function App() {
   },[])
 
   const handleClick = (user) => {
-    console.log(user)
+    console.log("sale el modal con la info del usuario: "+user.name.first)
   }
 
   const toggleModal = () => {
@@ -23,7 +24,7 @@ function App() {
 
   return (
     <main>
-      <Modal />
+      
       <div className="container-wrapper m-auto grid md:grid-cols-2 grid-cols-1 gap-7">
         { users ? 
           users.map(user => {
