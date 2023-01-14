@@ -14,7 +14,8 @@ function App() {
   },[])
 
   const handleClick = (user) => {
-    console.log(user)
+    setUsers(user)
+    // console.log(user)
   }
 
   const toggleModal = () => {
