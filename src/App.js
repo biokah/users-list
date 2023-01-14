@@ -1,46 +1,62 @@
-
 import "./App.css";
-import User from "./components/User"
-import Modal from "./components/Modal"
-import { useState, useEffect } from "react"
+import User from "./components/User";
+import Modal from "./components/Modal";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [users, setUsers] = useState(null)
-  const [selectedUser, setSelectedUser] = useState(null)
+  const [users, setUsers] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [inputUser, setInputUser] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch("https://randomuser.me/api/?results=30")
-    .then(result => result.json())
-    .then(data => setUsers(data.results))
-    
-  },[])
+      .then((result) => result.json())
+      .then((data) => setUsers(data.results));
+  }, []);
 
   const handleClick = (user) => {
-    setSelectedUser(user)
-  }
+    setSelectedUser(user);
+  };
 
   const toggleModal = () => {
-    setSelectedUser(null)
-  }
+    setSelectedUser(null);
+  };
+
+  const showInputUser = (evt) => {
+    console.log(setInputUser(evt.target.value));
+  };
 
   return (
     <main>
       {selectedUser && <Modal user={selectedUser} toggleModal={toggleModal} />}
       <div className="container-wrapper m-auto grid md:grid-cols-2 grid-cols-1 gap-7 pt-10">
-        <input type="text" placeholder="Search..." className="border border-solid border-gray-700 p-2 rounded" />
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border border-solid border-gray-700 p-2 rounded"
+          onChange={showInputUser}
+        />
+        {inputUser}
         <select className="border border-solid border-gray-700 py-2 rounded">
           <option value="">Please choose an option</option>
           <option value="female">female</option>
           <option value="male">male</option>
         </select>
-        { users ? 
-          users.map(user => {
-            return <div key={user.id.value || 
-              user.phone
-              }>
-              <User user={user} handleClick={handleClick} selectedUser={selectedUser} /></div >
+        {users ? (
+          users.map((user) => {
+            return (
+              <div key={user.id.value || user.phone}>
+                <User
+                  user={user}
+                  handleClick={handleClick}
+                  selectedUser={selectedUser}
+                />
+              </div>
+            );
           })
-        : <span>cargando...</span> }
+        ) : (
+          <span>cargando...</span>
+        )}
       </div>
     </main>
   );
